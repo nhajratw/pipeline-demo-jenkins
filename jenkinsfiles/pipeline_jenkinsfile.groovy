@@ -5,7 +5,7 @@ node {
   }
 
   stage('pull') {
-    git '/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service', branch 'setup'
+    git url:'/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service', branch:'setup'
   }
 
   stage('unit test') {
