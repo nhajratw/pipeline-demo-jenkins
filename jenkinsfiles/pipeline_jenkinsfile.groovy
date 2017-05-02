@@ -1,6 +1,5 @@
 node {
-  artifactVersion = "1.0.$BUILD_NUMBER"
-
+  /*
   stage('clean') {
     deleteDir()
   }
@@ -10,17 +9,16 @@ node {
   }
 
   stage('unit test') {
-    sh "$WORKSPACE/gradlew test -Pversion=${artifactVersion}"
+    sh "$WORKSPACE/gradlew test
   }
 
   stage('integration test') {
-    sh "$WORKSPACE/gradlew testIntegration -Pversion=${artifactVersion}"
+    sh "$WORKSPACE/gradlew testIntegration
   }
 
   stage('create artifacts') {
-    sh "$WORKSPACE/gradlew assemble -Pversion=${artifactVersion}"
+    sh "$WORKSPACE/gradlew assemble
   }
-  /*
   stage('publish artifacts') {
     sh "$WORKSPACE/gradlew publish -Pversion=${artifactVersion}"
   }
@@ -50,6 +48,7 @@ node {
   */
 }
 
+/*
 def deploy(dataCenter, artifactName, environment, type, username, password, space) {
   def artifactLocation = "/tmp"
   def expandedManifestLocation = "/tmp/${dataCenter}/${artifactName}"
@@ -67,3 +66,4 @@ def deploy(dataCenter, artifactName, environment, type, username, password, spac
 
   retry(3) { sh command }
 }
+*/
