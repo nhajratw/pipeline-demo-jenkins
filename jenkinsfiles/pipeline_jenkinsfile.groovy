@@ -1,32 +1,36 @@
-node {
+pipeline {
+ 
+  agent any
   
-  stage('clean') {
-    steps {
-      deleteDir()
+  stages {
+    stage('clean') {
+      steps {
+        deleteDir()
+      }
     }
-  }
 
-  stage('pull') {
-    steps {
-      git url:'/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service', branch:'setup'
+    stage('pull') {
+      steps {
+        git url:'/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service', branch:'setup'
+      }
     }
-  }
 
-  stage('unit test') {
-    steps {
-      sh "$WORKSPACE/gradlew test"
+    stage('unit test') {
+      steps {
+        sh "$WORKSPACE/gradlew test"
+      }
     }
-  }
 
-  stage('integration test') {
-    steps {
-      sh "$WORKSPACE/gradlew testIntegration"
+    stage('integration test') {
+      steps {
+        sh "$WORKSPACE/gradlew testIntegration"
+      }
     }
-  }
 
-  stage('create artifacts') {
-    steps {
-      sh "$WORKSPACE/gradlew assemble"
+    stage('create artifacts') {
+      steps {
+        sh "$WORKSPACE/gradlew assemble"
+      }
     }
   }
 /*
