@@ -1,8 +1,10 @@
 pipeline {
 
-  artifactVersion = "1.0.${BUILD_NUMBER}"
-
   agent any
+
+  environment {
+    artifactVersion = "1.0.${BUILD_NUMBER}"
+  }
   
   stages {
 
