@@ -1,8 +1,10 @@
 pipeline {
- 
+
   agent any
   
   stages {
+    def artifactVersion = "1.0.${BUILD_NUMBER}"
+
     stage('clean') {
       steps {
         deleteDir()
@@ -17,20 +19,20 @@ pipeline {
 
     stage('unit test') {
       steps {
-        sh "$WORKSPACE/gradlew test"
+        sh "$WORKSPACE/gradlew test -Pversion=${artifactVersion}"
       }
     }
 
     stage('integration test') {
       steps {
-        sh "$WORKSPACE/gradlew testIntegration"
+        sh "$WORKSPACE/gradlew testIntegration -Pversion=${artifactVersion}"
         junit 'build/test-results/**/*.xml'
       }
     }
 
     stage('create artifacts') {
       steps {
-        sh "$WORKSPACE/gradlew assemble"
+        sh "$WORKSPACE/gradlew assemble -Pversion=${artifactVersion}"
       }
     }
   }
