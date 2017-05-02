@@ -39,6 +39,12 @@ pipeline {
       }
     }
 
+    stage('publish artifacts') {
+      steps {
+        sh "$WORKSPACE/gradlew publish -Pversion=${releaseVersion}"
+      }
+    }
+
     stage('tag release') {
       steps {
         sh "git tag release/${releaseVersion}"
@@ -48,11 +54,6 @@ pipeline {
   }
 /*
 
-  stage('publish artifacts') {
-    steps {
-      sh "$WORKSPACE/gradlew publish -Pversion=${releaseVersion}"
-    }
-  }
 
   stage('retrieve artifacts') {
     steps {
