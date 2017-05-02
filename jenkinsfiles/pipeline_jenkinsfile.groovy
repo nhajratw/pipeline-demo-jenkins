@@ -1,51 +1,73 @@
-node {
-  /*
-  stage('clean') {
-    deleteDir()
-  }
+pipeline {
+  agent any
 
-  stage('pull') {
-    git '/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service'
-  }
+  stages {
+	/*
+	stage('clean') {
+		steps {
+			deleteDir()
+		}
+	}
 
-  stage('unit test') {
-    sh "$WORKSPACE/gradlew test"
-  }
+	stage('pull') {
+		steps {
+			git '/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service'
+		}
+	}
 
-  stage('integration test') {
-    sh "$WORKSPACE/gradlew testIntegration"
-  }
+	stage('unit test') {
+		steps {
+			sh "$WORKSPACE/gradlew test"
+		}
+	}
 
-  stage('create artifacts') {
-    sh "$WORKSPACE/gradlew assemble"
-  }
-  stage('publish artifacts') {
-    sh "$WORKSPACE/gradlew publish -Pversion=${artifactVersion}"
-  }
+	stage('integration test') {
+		steps {
+			sh "$WORKSPACE/gradlew testIntegration"
+		}
+	}
 
-  stage('tag release') {
-    sh "git tag release/${artifactVersion}"
-    sh "git push origin --tags"
-  }
+	stage('create artifacts') {
+		steps {
+			sh "$WORKSPACE/gradlew assemble"
+		}
+	}
+	stage('publish artifacts') {
+		steps {
+			sh "$WORKSPACE/gradlew publish -Pversion=${artifactVersion}"
+		}
+	}
 
-  stage('retrieve artifacts') {
-    def remoteLocation = "http://www.nexus.ford.com/content/repositories/goe_private_release_repository/com/ford/gotd/goe-services/${artifactVersion}"
-    sh "curl -u gotdgoe:FED[3y ${remoteLocation}/goe-services-${artifactVersion}.jar -o /tmp/goe-services-${artifactVersion}.jar"
-    sh "curl -u gotdgoe:FED[3y ${remoteLocation}/goe-services-${artifactVersion}-manifests.zip -o /tmp/goe-services-${artifactVersion}-manifests.zip"
-  }
+	stage('tag release') {
+		steps {
+			sh "git tag release/${artifactVersion}"
+			sh "git push origin --tags"
+		}
+	}
 
-  stage('deploy') {
-    sh "rm -rf ~/.cf/ecc ~/.cf/fmc"
-    def username = "goe-ci"
-    def password = "Goe2016!"
-    parallel (
-    "ecc services demo" : { deploy("ecc", "goe-services", "demo", "jar", username, password, "Beta") },
-    "fmc services demo" : { deploy("fmc", "goe-services", "demo", "jar", username, password, "Beta") },
-    "ecc services ci"   : { deploy("ecc", "goe-services", "ci", "jar", username, password, "Alpha") },
-    "fmc services ci"   : { deploy("fmc", "goe-services", "ci", "jar", username, password, "Alpha") },
-    )
+	stage('retrieve artifacts') {
+		steps {
+			def remoteLocation = "http://www.nexus.ford.com/content/repositories/goe_private_release_repository/com/ford/gotd/goe-services/${artifactVersion}"
+			sh "curl -u gotdgoe:FED[3y ${remoteLocation}/goe-services-${artifactVersion}.jar -o /tmp/goe-services-${artifactVersion}.jar"
+			sh "curl -u gotdgoe:FED[3y ${remoteLocation}/goe-services-${artifactVersion}-manifests.zip -o /tmp/goe-services-${artifactVersion}-manifests.zip"
+		}
+	}
+
+	stage('deploy') {
+		steps {
+			sh "rm -rf ~/.cf/ecc ~/.cf/fmc"
+			def username = "goe-ci"
+			def password = "Goe2016!"
+			parallel (
+				"ecc services demo" : { deploy("ecc", "goe-services", "demo", "jar", username, password, "Beta") },
+				"fmc services demo" : { deploy("fmc", "goe-services", "demo", "jar", username, password, "Beta") },
+				"ecc services ci"   : { deploy("ecc", "goe-services", "ci", "jar", username, password, "Alpha") },
+				"fmc services ci"   : { deploy("fmc", "goe-services", "ci", "jar", username, password, "Alpha") },
+			)
+		}
+	}
+	*/
   }
-  */
 }
 
 /*
