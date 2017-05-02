@@ -11,7 +11,7 @@ pipelineJob("pipeline-demo") {
       scm {
         git {
           remote {
-            url('git@github.ford.com:order-to-delivery/jenkins-job-configurations.git')
+            url('/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-jenkins')
             branch('*/master')
           }
         }
