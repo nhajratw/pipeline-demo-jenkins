@@ -9,15 +9,15 @@ node {
   }
 
   stage('unit test') {
-    sh "$WORKSPACE/gradlew test
+    sh "$WORKSPACE/gradlew test"
   }
 
   stage('integration test') {
-    sh "$WORKSPACE/gradlew testIntegration
+    sh "$WORKSPACE/gradlew testIntegration"
   }
 
   stage('create artifacts') {
-    sh "$WORKSPACE/gradlew assemble
+    sh "$WORKSPACE/gradlew assemble"
   }
   stage('publish artifacts') {
     sh "$WORKSPACE/gradlew publish -Pversion=${artifactVersion}"
