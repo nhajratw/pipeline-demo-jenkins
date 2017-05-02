@@ -1,11 +1,11 @@
 node {
-  /*
+  
   stage('clean') {
     deleteDir()
   }
 
   stage('pull') {
-    git '/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service'
+    git '/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service', branch 'setup'
   }
 
   stage('unit test') {
@@ -19,6 +19,7 @@ node {
   stage('create artifacts') {
     sh "$WORKSPACE/gradlew assemble
   }
+  */
   stage('publish artifacts') {
     sh "$WORKSPACE/gradlew publish -Pversion=${artifactVersion}"
   }
