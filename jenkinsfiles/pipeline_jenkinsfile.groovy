@@ -3,7 +3,8 @@ pipeline {
   agent any
   
   stages {
-    def artifactVersion = "1.0.${BUILD_NUMBER}"
+
+    artifactVersion = "1.0.${BUILD_NUMBER}"
 
     stage('clean') {
       steps {
