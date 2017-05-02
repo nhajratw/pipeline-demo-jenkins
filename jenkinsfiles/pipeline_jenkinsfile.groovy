@@ -19,7 +19,7 @@ node {
   stage('create artifacts') {
     sh "$WORKSPACE/gradlew assemble"
   }
-  */
+
   stage('publish artifacts') {
     sh "$WORKSPACE/gradlew publish -Pversion=${artifactVersion}"
   }
