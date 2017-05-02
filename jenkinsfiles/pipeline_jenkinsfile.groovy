@@ -3,7 +3,7 @@ pipeline {
   agent any
 
   environment {
-    artifactVersion = "1.0.${BUILD_NUMBER}"
+    releaseVersion = "1.0.${BUILD_NUMBER}"
   }
   
   stages {
@@ -22,37 +22,39 @@ pipeline {
 
     stage('unit test') {
       steps {
-        sh "$WORKSPACE/gradlew test -Pversion=${artifactVersion}"
+        sh "$WORKSPACE/gradlew test -Pversion=${releaseVersion}"
       }
     }
 
     stage('integration test') {
       steps {
-        sh "$WORKSPACE/gradlew testIntegration -Pversion=${artifactVersion}"
+        sh "$WORKSPACE/gradlew testIntegration -Pversion=${releaseVersion}"
         junit 'build/test-results/**/*.xml'
       }
     }
 
     stage('create artifacts') {
       steps {
-        sh "$WORKSPACE/gradlew assemble -Pversion=${artifactVersion}"
+        sh "$WORKSPACE/gradlew assemble -Pversion=${releaseVersion}"
       }
     }
   }
 /*
   stage('publish artifacts') {
-    sh "$WORKSPACE/gradlew publish -Pversion=${artifactVersion}"
+    sh "$WORKSPACE/gradlew publish -Pversion=${releaseVersion}"
   }
 
   stage('tag release') {
-    sh "git tag release/${artifactVersion}"
+    sh "git tag release/${releaseVersion}"
     sh "git push origin --tags"
   }
 
   stage('retrieve artifacts') {
-    def remoteLocation = "http://www.nexus.ford.com/content/repositories/goe_private_release_repository/com/ford/gotd/goe-services/${artifactVersion}"
-    sh "curl -u gotdgoe:FED[3y ${remoteLocation}/goe-services-${artifactVersion}.jar -o /tmp/goe-services-${artifactVersion}.jar"
-    sh "curl -u gotdgoe:FED[3y ${remoteLocation}/goe-services-${artifactVersion}-manifests.zip -o /tmp/goe-services-${artifactVersion}-manifests.zip"
+    def remoteLocation =
+    "http://www.nexus.ford.com/content/repositories/goe_private_release_repository/com/ford/gotd/goe-services/${releaseVersion}"
+    sh "curl -u gotdgoe:FED[3y ${remoteLocation}/goe-services-${releaseVersion}.jar -o /tmp/goe-services-${releaseVersion}.jar"
+    sh "curl -u gotdgoe:FED[3y ${remoteLocation}/goe-services-${releaseVersion}-manifests.zip -o
+    /tmp/goe-services-${releaseVersion}-manifests.zip"
   }
 
   stage('deploy') {
@@ -73,7 +75,7 @@ pipeline {
 def deploy(dataCenter, artifactName, environment, type, username, password, space) {
   def artifactLocation = "/tmp"
   def expandedManifestLocation = "/tmp/${dataCenter}/${artifactName}"
-  sh "mkdir -p ${expandedManifestLocation} && unzip -o ${artifactLocation}/${artifactName}-${artifactVersion}-manifests.zip -d ${expandedManifestLocation}"
+  sh "mkdir -p ${expandedManifestLocation} && unzip -o ${artifactLocation}/${artifactName}-${releaseVersion}-manifests.zip -d ${expandedManifestLocation}"
   def manifestFile = "${expandedManifestLocation}/manifest-${environment}.yml"
   def api = "https://api.sys-q01.pcfqa${dataCenter}.ford.com"
   def cf_home = "~/.cf/${dataCenter}/${space}"
@@ -83,7 +85,7 @@ def deploy(dataCenter, artifactName, environment, type, username, password, spac
   command += "; export CF_HOME=${cf_home}"
   command += "; cf api ${api} --skip-ssl-validation"
   command += "; cf login -u ${username} -p ${password} -o Ford_GOE_NA -s ${space}"
-  command += "; cf push -f ${manifestFile} -p ${artifactLocation}/${artifactName}-${artifactVersion}.${type}"
+  command += "; cf push -f ${manifestFile} -p ${artifactLocation}/${artifactName}-${releaseVersion}.${type}"
 
   retry(3) { sh command }
 }
