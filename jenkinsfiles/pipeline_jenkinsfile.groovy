@@ -1,25 +1,35 @@
 node {
   
   stage('clean') {
-    deleteDir()
+    steps {
+      deleteDir()
+    }
   }
 
   stage('pull') {
-    git url:'/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service', branch:'setup'
+    steps {
+      git url:'/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service', branch:'setup'
+    }
   }
 
   stage('unit test') {
-    sh "$WORKSPACE/gradlew test"
+    steps {
+      sh "$WORKSPACE/gradlew test"
+    }
   }
 
   stage('integration test') {
-    sh "$WORKSPACE/gradlew testIntegration"
+    steps {
+      sh "$WORKSPACE/gradlew testIntegration"
+    }
   }
 
   stage('create artifacts') {
-    sh "$WORKSPACE/gradlew assemble"
+    steps {
+      sh "$WORKSPACE/gradlew assemble"
+    }
   }
-
+/*
   stage('publish artifacts') {
     sh "$WORKSPACE/gradlew publish -Pversion=${artifactVersion}"
   }
@@ -46,7 +56,7 @@ node {
     "fmc services ci"   : { deploy("fmc", "goe-services", "ci", "jar", username, password, "Alpha") },
     )
   }
-
+*/
 }
 
 /*
