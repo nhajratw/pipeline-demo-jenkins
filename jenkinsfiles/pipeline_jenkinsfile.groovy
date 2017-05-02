@@ -46,7 +46,7 @@ node {
     "fmc services ci"   : { deploy("fmc", "goe-services", "ci", "jar", username, password, "Alpha") },
     )
   }
-  */
+
 }
 
 /*
