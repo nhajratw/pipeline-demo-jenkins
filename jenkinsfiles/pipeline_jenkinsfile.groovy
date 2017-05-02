@@ -1,10 +1,10 @@
 pipeline {
 
+  artifactVersion = "1.0.${BUILD_NUMBER}"
+
   agent any
   
   stages {
-
-    artifactVersion = "1.0.${BUILD_NUMBER}"
 
     stage('clean') {
       steps {
