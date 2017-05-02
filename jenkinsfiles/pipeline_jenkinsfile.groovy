@@ -38,35 +38,44 @@ pipeline {
         sh "$WORKSPACE/gradlew assemble -Pversion=${releaseVersion}"
       }
     }
+
+    stage('tag release') {
+      steps {
+        sh "git tag release/${releaseVersion}"
+        sh "git push origin --tags"
+      }
+    }
   }
 /*
-  stage('publish artifacts') {
-    sh "$WORKSPACE/gradlew publish -Pversion=${releaseVersion}"
-  }
 
-  stage('tag release') {
-    sh "git tag release/${releaseVersion}"
-    sh "git push origin --tags"
+  stage('publish artifacts') {
+    steps {
+      sh "$WORKSPACE/gradlew publish -Pversion=${releaseVersion}"
+    }
   }
 
   stage('retrieve artifacts') {
-    def remoteLocation =
-    "http://www.nexus.ford.com/content/repositories/goe_private_release_repository/com/ford/gotd/goe-services/${releaseVersion}"
-    sh "curl -u gotdgoe:FED[3y ${remoteLocation}/goe-services-${releaseVersion}.jar -o /tmp/goe-services-${releaseVersion}.jar"
-    sh "curl -u gotdgoe:FED[3y ${remoteLocation}/goe-services-${releaseVersion}-manifests.zip -o
-    /tmp/goe-services-${releaseVersion}-manifests.zip"
+    steps {
+      def remoteLocation =
+      "http://www.nexus.ford.com/content/repositories/goe_private_release_repository/com/ford/gotd/goe-services/${releaseVersion}"
+      sh "curl -u gotdgoe:FED[3y ${remoteLocation}/goe-services-${releaseVersion}.jar -o /tmp/goe-services-${releaseVersion}.jar"
+      sh "curl -u gotdgoe:FED[3y ${remoteLocation}/goe-services-${releaseVersion}-manifests.zip -o
+      /tmp/goe-services-${releaseVersion}-manifests.zip"
+    }
   }
 
   stage('deploy') {
-    sh "rm -rf ~/.cf/ecc ~/.cf/fmc"
-    def username = "goe-ci"
-    def password = "Goe2016!"
-    parallel (
-    "ecc services demo" : { deploy("ecc", "goe-services", "demo", "jar", username, password, "Beta") },
-    "fmc services demo" : { deploy("fmc", "goe-services", "demo", "jar", username, password, "Beta") },
-    "ecc services ci"   : { deploy("ecc", "goe-services", "ci", "jar", username, password, "Alpha") },
-    "fmc services ci"   : { deploy("fmc", "goe-services", "ci", "jar", username, password, "Alpha") },
-    )
+    steps {
+      sh "rm -rf ~/.cf/ecc ~/.cf/fmc"
+      def username = "goe-ci"
+      def password = "Goe2016!"
+      parallel (
+        "ecc services demo" : { deploy("ecc", "goe-services", "demo", "jar", username, password, "Beta") },
+        "fmc services demo" : { deploy("fmc", "goe-services", "demo", "jar", username, password, "Beta") },
+        "ecc services ci"   : { deploy("ecc", "goe-services", "ci", "jar", username, password, "Alpha") },
+        "fmc services ci"   : { deploy("fmc", "goe-services", "ci", "jar", username, password, "Alpha") },
+      )
+    }
   }
 */
 }
