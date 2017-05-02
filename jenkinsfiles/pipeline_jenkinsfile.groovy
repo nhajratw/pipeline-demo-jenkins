@@ -18,6 +18,7 @@ pipeline {
     stage('unit test') {
       steps {
         sh "$WORKSPACE/gradlew test"
+        junit 'build/test-results/**/*.xml'
       }
     }
 
