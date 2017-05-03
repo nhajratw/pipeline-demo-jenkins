@@ -58,37 +58,9 @@ pipeline {
 
 	stage('deploy') {
 		steps {
-			sh "rm -rf ~/.cf/ecc ~/.cf/fmc"
-			def username = "goe-ci"
-			def password = "Goe2016!"
-			parallel (
-				"ecc services demo" : { deploy("ecc", "goe-services", "demo", "jar", username, password, "Beta") },
-				"fmc services demo" : { deploy("fmc", "goe-services", "demo", "jar", username, password, "Beta") },
-				"ecc services ci"   : { deploy("ecc", "goe-services", "ci", "jar", username, password, "Alpha") },
-				"fmc services ci"   : { deploy("fmc", "goe-services", "ci", "jar", username, password, "Alpha") },
 			)
 		}
 	}
 	*/
   }
 }
-
-/*
-def deploy(dataCenter, artifactName, environment, type, username, password, space) {
-  def artifactLocation = "/tmp"
-  def expandedManifestLocation = "/tmp/${dataCenter}/${artifactName}"
-  sh "mkdir -p ${expandedManifestLocation} && unzip -o ${artifactLocation}/${artifactName}-${releaseVersion}-manifests.zip -d ${expandedManifestLocation}"
-  def manifestFile = "${expandedManifestLocation}/manifest-${environment}.yml"
-  def api = "https://api.sys-q01.pcfqa${dataCenter}.ford.com"
-  def cf_home = "~/.cf/${dataCenter}/${space}"
-  def domain = "apps-q01.pcfqa${dataCenter}.ford.com"
-
-  def command = 'mkdir -p ' + cf_home
-  command += "; export CF_HOME=${cf_home}"
-  command += "; cf api ${api} --skip-ssl-validation"
-  command += "; cf login -u ${username} -p ${password} -o Ford_GOE_NA -s ${space}"
-  command += "; cf push -f ${manifestFile} -p ${artifactLocation}/${artifactName}-${releaseVersion}.${type}"
-
-  retry(3) { sh command }
-}
-*/
