@@ -55,7 +55,7 @@ pipeline {
     stage('deploy') {
       steps {
         sh "cf login -a api.local.pcfdev.io --skip-ssl-validation -u admin -p admin -o demo -s pipeline"
-        sh "cf push pipeline-demo-service -p build/libs/pipeline-demo-service-${releaseVersion}.jar"
+        sh "cf push pipeline-demo-service -p $WORKSPACE/build/libs/pipeline-demo-service-${releaseVersion}.jar"
       }
     }
   }
