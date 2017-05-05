@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  environment {
+    releaseVersion = "1.0.${BUILD_NUMBER}"
+  }
+
   stages {
     stage('clean') {
       steps {
@@ -26,5 +30,12 @@ pipeline {
         junit "build/test-results/**/*.xml"
       }
     }
+
+    stage('create artifact') {
+      steps {
+        sh "$WORKSPACE/gradlew assemble -Pversion=${releaseVersion}" 
+      }
+    }
+
   }
 }
