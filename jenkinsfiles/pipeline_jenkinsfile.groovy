@@ -19,5 +19,11 @@ pipeline {
         sh "$WORKSPACE/gradlew test" 
       }
     }
+
+    stage('integration tests') {
+      steps {
+        sh "$WORKSPACE/gradlew testIntegration" 
+      }
+    }
   }
 }
