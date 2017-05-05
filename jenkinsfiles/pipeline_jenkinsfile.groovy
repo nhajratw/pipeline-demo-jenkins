@@ -7,9 +7,16 @@ pipeline {
         deleteDir()
       }
     }
+
     stage('pull') {
       steps {
         git url:'/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service', branch:'aab17'
+      }
+    }
+
+    stage('micro tests') {
+      steps {
+        sh "$WORKSPACE/gradlew test" 
       }
     }
   }
