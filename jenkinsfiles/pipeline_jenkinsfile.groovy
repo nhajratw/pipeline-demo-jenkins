@@ -23,14 +23,6 @@ pipeline {
         sh "$WORKSPACE/gradlew test" 
       }
     }
-/*
-    stage('integration tests') {
-      steps {
-        sh "$WORKSPACE/gradlew testIntegration" 
-        junit "build/test-results/**/*.xml"
-      }
-    }
-*/
     stage('create artifact') {
       steps {
         sh "$WORKSPACE/gradlew assemble -Pversion=${releaseVersion}" 
