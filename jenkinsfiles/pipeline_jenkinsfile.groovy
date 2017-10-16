@@ -29,6 +29,12 @@ pipeline {
         sh "$WORKSPACE/gradlew assemble -Pversion=${releaseVersion}" 
       }
     }
+
+    stage('publish to nexus') {
+      steps {
+        sh "$WORKSPACE/gradlew publish -Pversion=${releaseVersion}" 
+      }
+    }
   }
 
 }
