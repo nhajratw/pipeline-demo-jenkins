@@ -8,6 +8,13 @@ pipeline {
         git url:'/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service', branch:'agiledc17'
       }
     }
+
+    stage('micro tests') {
+      steps {
+        sh "$WORKSPACE/gradlew test" 
+      }
+    }
+
   }
 
 }
