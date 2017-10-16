@@ -35,6 +35,26 @@ pipeline {
         sh "$WORKSPACE/gradlew publish -Pversion=${releaseVersion}" 
       }
     }
+
+    stage('deploy a') {
+      steps {
+        sh """
+	  cf login -a api.local.pcfdev.io --skip-ssl-validation -u admin -p admin -o demo -s pipeline
+	  cf push pipeline-demo-service-a -p $WORKSPACE/build/libs/pipeline-demo-service-${releaseVersion}.jar
+	  cf map-route pipeline-demo-service-a local.pcfdev.io --hostname pipeline-demo-service
+	"""
+      }
+    }
+
+    stage('deploy b') {
+      steps {
+        sh """
+	  cf login -a api.local.pcfdev.io --skip-ssl-validation -u admin -p admin -o demo -s pipeline
+	  cf push pipeline-demo-service-b -p $WORKSPACE/build/libs/pipeline-demo-service-${releaseVersion}.jar
+	  cf map-route pipeline-demo-service-b local.pcfdev.io --hostname pipeline-demo-service
+	"""
+      }
+    }
   }
 
 }
