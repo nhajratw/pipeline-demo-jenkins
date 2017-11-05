@@ -12,7 +12,7 @@ pipelineJob("pipeline-demo") {
         git {
           remote {
             url('/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-jenkins')
-            branch('*/master')
+            branch('*/agileto2017')
           }
         }
       }
