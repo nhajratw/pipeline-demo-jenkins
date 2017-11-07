@@ -11,6 +11,7 @@ pipeline {
     stage('micro tests') {
       steps {
         sh "$WORKSPACE/gradlew test"
+	junit "build/test-results/**/*.xml"
       }
     }
 
