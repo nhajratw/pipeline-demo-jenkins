@@ -44,6 +44,7 @@ pipeline {
           cf map-route pipeline-demo-service-a local.pcfdev.io --hostname pipeline-demo-service
         """
       }
+    }
 
     stage('deploy b') {
       steps {
