@@ -3,7 +3,9 @@ pipeline {
 
   stages {
     stage('clean') {
-      deleteDir()
+      steps {
+        deleteDir()
+      }
     }
 
     stage('pull') {
