@@ -21,5 +21,12 @@ pipeline {
       }
     }
 
+    stage('create artifact') {
+      steps {
+        sh "$WORKSPACE/gradlew assemble"
+      }
+    }
+
+
   }
 }
