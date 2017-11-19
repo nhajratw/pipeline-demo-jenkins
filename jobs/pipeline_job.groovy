@@ -1,4 +1,4 @@
-pipelineJob("pipeline-demo") {
+pipelineJob("pipeline-demo-service") {
   description "Build, test and deploy the pipeline demo"
     logRotator {
       numToKeep(50)
