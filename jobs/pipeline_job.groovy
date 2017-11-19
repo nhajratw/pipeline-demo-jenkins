@@ -11,12 +11,12 @@ pipelineJob("pipeline-demo") {
       scm {
         git {
           remote {
-            url('/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-jenkins')
+            url('/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service')
             branch('*/master')
           }
         }
       }
-      scriptPath("jenkinsfiles/pipeline_jenkinsfile.groovy")
+      scriptPath("Jenkinsfile")
     }
   }
 }
