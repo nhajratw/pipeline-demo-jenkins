@@ -12,7 +12,7 @@ pipelineJob("pipeline-demo-service") {
         git {
           remote {
             url('/Users/nayan/Documents/workspace/pipeline-demo/pipeline-demo-service')
-            branch('*/master')
+            branch('*/goat17')
           }
         }
       }
